@@ -2,7 +2,7 @@
 import { createServer } from "http"; // Importing Node.js's HTTP module to create a server
 import express from "express"; // Importing Express.js for handling HTTP requests
 import next, { NextApiHandler } from "next"; // Importing Next.js for server-side rendering
-
+import { Server } from "socket.io";
 // Defining the port the server will listen on, using environment variable PORT if available, otherwise defaulting to 3000
 const port = parseInt(process.env.PORT || "3000", 10);
 
@@ -22,6 +22,21 @@ nextApp.prepare().then(() => {
 
     // Creating an HTTP server instance using Express.js app
     const server = createServer(app);
+
+    const io = new Server<ClientToServerEvents,ServerToClientEvents>(server);
+
+    io.on("connection", (socket) => {
+        console.log("connection!");
+
+        socket.on("draw", (moves,options)=>{ 
+         console.log("drawing...");
+         socket.broadcast.emit("socket_draw", moves,options);
+        })
+
+        socket.on("disconnect",() => {
+            console.log("client disconnect!")
+        })
+    })
 
     // Route all incoming requests through Next.js API handler
     app.all("*", (req: any, res: any) => 
