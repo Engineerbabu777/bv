@@ -39,4 +39,19 @@ export const useDraw = (
   ctx.closePath();
 
   }
+
+  const handleDrawing = (x: number, y: number) => {
+    if (!ctx) return
+
+    moves.push([x,y]);
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
+
+  return {
+    handleDrawing,
+    handleEndDrawing,
+    handleStartDrawing
+  }
 }
