@@ -1,4 +1,5 @@
 
+import { useDraw } from "@/global/hooks/drawing";
 import { Inter } from "next/font/google";
 import { useRef, useState } from "react";
 
@@ -14,6 +15,8 @@ export default function Home() {
     lineColor:"#000",
     lineWidth:5,
   })
+
+  const {drawing,handleDraw,handleStartDrawing,handleEndDrawing} = useDraw(options,ctxRef.current);
 
 
   return (
