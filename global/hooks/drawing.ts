@@ -40,18 +40,21 @@ export const useDraw = (
 
   }
 
-  const handleDrawing = (x: number, y: number) => {
-    if (!ctx) return
+  const handleDraw = (x: number, y: number) => {
+    if (ctx && drawing) {
+      moves.push([x,y]);
 
-    moves.push([x,y]);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
 
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    
   }
 
   return {
-    handleDrawing,
+    handleDraw,
     handleEndDrawing,
-    handleStartDrawing
+    handleStartDrawing,
+    drawing
   }
 }
