@@ -1,7 +1,7 @@
 
 import { useDraw } from "@/global/hooks/drawing";
 import { Inter } from "next/font/google";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +17,15 @@ export default function Home() {
   })
 
   const {drawing,handleDraw,handleStartDrawing,handleEndDrawing} = useDraw(options,ctxRef.current);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({width:window.innerWidth,height:window.innerHeight})
+    }
+
+    window.addEventListener("resize", handleResize);
+  },[])
 
 
   return (
